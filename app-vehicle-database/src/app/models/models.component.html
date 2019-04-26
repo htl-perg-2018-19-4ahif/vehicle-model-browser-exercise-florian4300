@@ -1,0 +1,51 @@
+
+<mat-form-field>
+  <mat-select [(ngModel)]="year" (ngModelChange)="setChangedTrue()" placeholder="Year">
+    <mat-option value=""></mat-option>
+    <mat-option *ngFor="let year of years" value="{{ year }}">{{
+      year
+    }}</mat-option>
+  </mat-select>
+</mat-form-field> <br>
+
+
+<mat-form-field>
+ <mat-select [(ngModel)]="make" (ngModelChange)="setChangedTrue()" placeholder="Make">
+    <mat-option value=""></mat-option>
+    <mat-option *ngFor="let make of makes" value="{{ make }}">{{
+      make
+    }}</mat-option>
+  </mat-select>
+
+</mat-form-field>
+
+<br>
+<button mat-raised-button (click)="filterList()">Filter</button>
+<br>
+<table width="100%" mat-table [dataSource]="models" *ngIf="models">
+  <ng-container matColumnDef="year">
+    <th mat-header-cell *matHeaderCellDef> Year </th>
+    <td mat-cell *matCellDef="let model"> {{model.year}} </td>
+  </ng-container>
+  <ng-container matColumnDef="model">
+    <th mat-header-cell *matHeaderCellDef> Model </th>
+    <td mat-cell *matCellDef="let model"> {{model.model}} </td>
+  </ng-container>
+  <ng-container matColumnDef="make">
+    <th mat-header-cell *matHeaderCellDef> Make </th>
+    <td mat-cell *matCellDef="let model"> {{model.make}} </td>
+  </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<button mat-raised-button (click)="decreaseOffset()" [disabled]="offset == 0">
+  Previous
+</button>
+<button
+  mat-raised-button
+  (click)="increaseOffset()"
+  [disabled]="models.length != 10"
+>
+  Next
+</button>
